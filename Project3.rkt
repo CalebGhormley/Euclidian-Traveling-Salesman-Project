@@ -34,6 +34,8 @@
 (define (walk list)
   (cond
     [ (null? (cdr list)) null ]
-    [ #t (cons (car (cdr list)) (cons (car list) (cdr (cdr list))))]
+    [ #t (cons (
+                cons (car (cdr list)) (cons (car list) (cdr (cdr list))))
+                (walk (cdr list)))]
     )
   )
