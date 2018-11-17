@@ -28,3 +28,12 @@
 (define (genTours n)
   (permutate (cdr (trevlist (makeList n) '())))
   )
+
+;;This function returns lists for every possible position
+;;of the first element, leaving the other elements unmoved.
+(define (walk list)
+  (cond
+    [ (null? (cdr list)) null ]
+    [ #t (cons (car (cdr list)) (cons (car list) (cdr (cdr list))))]
+    )
+  )
