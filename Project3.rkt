@@ -1,4 +1,4 @@
-#lang racket
+ #lang racket
 (define (genTours n)
   (permutate (trevlist (makeList n) '()) 0)
   )
@@ -13,25 +13,24 @@
       acc
       (trevlist (cdr list) (cons (car list) acc))))
 
-(define (permutate list i)
-  (if (< i (factorial (length (cdr list))))
-      (cons (cons (car list) (permutation (cdr list) i 0)) (permutate list (+ i 1)))
-      list)
+(define (permutate list n)
+  (if (< n (factorial (length (cdr list))))
+      (cons (cons (car list) (permutation (cdr list) n 1 (length (cdr list)))) (permutate list (+ n 1)))
+      null)
 )
 
-(define (permutation list n a)
-  (if (> a (length list))
-      (= a 1)
-      (= a a)
-      )
-  (if (> n 0)
-      (permutation (swapAt list a) (- n 1) (+ a 1))
-      list))
+(define (permutation list n a size)
+  (cond
+    [(< n 1) list]
+    [(= a size) (permutation list n 1 size)]
+    [#t (permutation (swapAt list a) (- n 1) (+ a 1) size)]))
 
 (define (swapAt list a)
   (if (> a 1)
       (cons (car list) (swapAt (cdr list) (- a 1)))
-      (cons (car (cdr list)) (cons (car list) (cdr (cdr list))))))
+      (cons (car (cdr list)) (cons (car list) (cdr (cdr list))))
+       )
+    )
 
 
 (define (factorial n)
