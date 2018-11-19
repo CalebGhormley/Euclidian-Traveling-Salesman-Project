@@ -1,7 +1,7 @@
  #lang racket
+
 (define (genTours n)
-  (permutate (trevlist (makeList n) '()) 0)
-  )
+  (permutate (trevlist (makeList n) '()) 0))
 
 (define (makeList n)
   (if (= n 0)
@@ -16,8 +16,7 @@
 (define (permutate list n)
   (if (< n (factorial (length (cdr list))))
       (cons (cons (car list) (permutation (cdr list) n 1 (length (cdr list)))) (permutate list (+ n 1)))
-      null)
-)
+      null))
 
 (define (permutation list n a size)
   (cond
@@ -28,10 +27,7 @@
 (define (swapAt list a)
   (if (> a 1)
       (cons (car list) (swapAt (cdr list) (- a 1)))
-      (cons (car (cdr list)) (cons (car list) (cdr (cdr list))))
-       )
-    )
-
+      (cons (car (cdr list)) (cons (car list) (cdr (cdr list))))))
 
 (define (factorial n)
   (if (> n 1)
