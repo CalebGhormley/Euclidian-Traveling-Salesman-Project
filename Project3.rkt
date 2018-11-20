@@ -54,13 +54,13 @@
    (getVertex (cdr vertices) (-  position 1))))
 
 (define (etsp points)
-  (calcShortest (permutate points 0) (genTours (length points)) (score points) (trevlist (makeList (length points)) '())))
+  (calcShortest points (genTours (length points)) (score points (trevlist (makeList (length points)) '())) (trevlist (makeList (length points)) '())))
 
 (define (calcShortest points lists value best)
   (if (null? (cdr lists))
-      (if (< (score (car points)) value)
+      (if (< (score points (car lists)) value)
           (car lists)
           best)
-      (if (< (score (car points)) value)
-          (calcShortest (cdr points) (cdr lists) (score (car points)) (car lists))
-          (calcShortest (cdr points) (cdr lists) value best))))
+      (if (< (score points (car lists)) value)
+          (calcShortest points (cdr lists) (score points (car lists)) (car lists))
+          (calcShortest points (cdr lists) value best))))
