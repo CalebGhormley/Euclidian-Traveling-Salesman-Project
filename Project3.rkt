@@ -43,7 +43,7 @@
       (calcDistance (cdr points) start (+ acc (sqrt (+ (* (- (car (car points)) (car (car (cdr points)))) (- (car (car points)) (car (car (cdr points))))) (* (- (car (cdr (car points))) (car (cdr (car (cdr points))))) (- (car (cdr (car points))) (car (cdr (car (cdr points))))))))))))
 
 (define (etsp points)
-  (calcShortest (permutate points 0) (genTours (length points)) 10000 '()))
+  (calcShortest (permutate points 0) (genTours (length points)) (score points) (trevlist (makeList (length points)) '())))
 
 (define (calcShortest points lists value best)
   (if (null? (cdr lists))
