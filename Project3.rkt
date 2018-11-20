@@ -33,3 +33,13 @@
   (if (> n 1)
       (* n (factorial (- n 1)))
       1))
+
+(define (score points list)
+  (calcDistance points (car points) 0))
+
+(define (calcDistance points start acc)
+  (display acc)
+  (if (null? (cdr points))
+      (+ acc (sqrt (+ (* (- (car (car points)) (car start)) (- (car (car points)) (car start))) (* (- (car (cdr (car points))) (car (cdr start))) (- (car (cdr (car points))) (car (cdr start)))))))
+      (calcDistance (cdr points) start (+ acc (sqrt (+ (* (- (car (car points)) (car (car (cdr points)))) (- (car (car points)) (car (car (cdr points))))) (* (- (car (cdr (car points))) (car (cdr (car (cdr points))))) (- (car (cdr (car points))) (car (cdr (car (cdr points))))))))))))
+
