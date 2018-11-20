@@ -34,13 +34,24 @@
       (* n (factorial (- n 1)))
       1))
 
-(define (score points)
-  (calcDistance points (car points) 0))
 
-(define (calcDistance points start acc)
-  (if (null? (cdr points))
-      (+ acc (sqrt (+ (* (- (car (car points)) (car start)) (- (car (car points)) (car start))) (* (- (car (cdr (car points))) (car (cdr start))) (- (car (cdr (car points))) (car (cdr start)))))))
-      (calcDistance (cdr points) start (+ acc (sqrt (+ (* (- (car (car points)) (car (car (cdr points)))) (- (car (car points)) (car (car (cdr points))))) (* (- (car (cdr (car points))) (car (cdr (car (cdr points))))) (- (car (cdr (car points))) (car (cdr (car (cdr points))))))))))))
+(define (score indices tourstops)
+  (calcDistance indices tourstops (car indices)))
+
+(define (calcDistance indices tourstops start) 
+  (if 
+    (null? (cdr tourstops))
+    (pythag (getVertex indices (car tourstops)) start)
+    (+ (pythag (getVertex indices (car tourstops)) (getVertex indices (car (cdr tourstops) )) ) (calcDistance indices (cdr tourstops) start))))
+
+(define ( pythag posone postwo)
+  (sqrt (+ (expt ( - (car posone) (car postwo) ) 2.0) (expt ( - (car(cdr posone)) (car(cdr postwo)) ) 2.0))))
+
+(define (getVertex vertices position)
+  (if
+   (= position 1)
+   (car vertices)
+   (getVertex (cdr vertices) (-  position 1))))
 
 (define (etsp points)
   (calcShortest (permutate points 0) (genTours (length points)) (score points) (trevlist (makeList (length points)) '())))
