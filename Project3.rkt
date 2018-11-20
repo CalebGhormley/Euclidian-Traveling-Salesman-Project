@@ -15,19 +15,24 @@
 
 (define (permutate list n)
   (if (< n (factorial (length (cdr list))))
-      (cons (cons (car list) (permutation (cdr list) n 1 (length (cdr list)))) (permutate list (+ n 1)))
+      (cons (cons (car list) (permutation (cdr list) n)) (permutate list (+ n 1)))
       null))
 
-(define (permutation list n a size)
+(define (permutation list n)
   (cond
-    [(< n 1) list]
-    [(= a size) (permutation list n 1 size)]
-    [#t (permutation (swapAt list a) (- n 1) (+ a 1) size)]))
+    [(= n 0) list]
+    [(>= n (factorial (length (cdr list)))) (cons (getitem list (truncate (/ n (factorial (length (cdr list)))))) (permutation (getlist list (truncate (/ n (factorial (length (cdr list)))))) (modulo n (factorial (length (cdr list))))))]
+    [#t (cons (car list) (permutation (cdr list) n))]))
 
-(define (swapAt list a)
-  (if (> a 1)
-      (cons (car list) (swapAt (cdr list) (- a 1)))
-      (cons (car (cdr list)) (cons (car list) (cdr (cdr list))))))
+(define (getlist list a)
+  (if (> a 0)
+      (cons (car list) (getlist (cdr list) (- a 1)))
+      (cdr list)))
+
+(define (getitem list b)
+  (if (> b 0)
+      (getitem (cdr list) (- b 1))
+      (car list)))
 
 (define (factorial n)
   (if (> n 1)
